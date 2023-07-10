@@ -40,8 +40,8 @@ with open('important/userAgents.txt') as f:#
 colorama.init(autoreset=True)
 
 def usage():
-    print(Fore.YELLOW + "USAGE - python3 main.py url")
-    print(Fore.YELLOW + "EXAMPLE - python3 main.py https://ilovedicks.com/")
+    print(Fore.YELLOW + "USAGE - python3 main.py url workers")
+    print(Fore.YELLOW + "EXAMPLE - python3 main.py https://ilovedicks.com/ 50")
     print("\a")
     print(Fore.RED + """
          ...          ...          ...  
@@ -69,10 +69,11 @@ def error(msg):
 
 def main():
     try:
-        if len(sys.argv) < 2:
-            error(Fore.GREEN + 'Please supply at least the URL')
+        if len(sys.argv) < 3:
+            error(Fore.GREEN + 'Please supply the URL and the num of workers')
 
         url = sys.argv[1]
+        DEFAULT_WORKERS = sys.argv[2]
 
         if url == '-h':
             usage()
@@ -83,6 +84,9 @@ def main():
 
         if url == None:
             error(Fore.RED + "No URL supplied")
+        
+        if DEFAULT_WORKERS == None:
+            error(Fore.RED + "No workers supplied, for a normal PC I recommend 50")
 
         opts, args = getopt.getopt(sys.argv[2:], "dhw:s:m:u:", ["debug", "help", "workers", "sockets", "method", "useragents" ])
 
@@ -128,7 +132,7 @@ def main():
         rindos.method = method
         rindos.nr_sockets = socks
 
-        rindos.fire()
+        rindos.fire(DEFAULT_WORKERS)
 
     except getopt.GetoptError as err:
         # print help information and exit:

@@ -59,7 +59,7 @@ class Rindos(object):
         print("")
 
     # funny :D
-    def fire(self):
+    def fire(self, workers):
         self.printHeader()
         print(Fore.LIGHTCYAN_EX + "MODE: '{0}' - WORKERS: {1}  - CONNECTIONS: {2} ".format(self.method, self.nr_workers, self.nr_sockets))
 
@@ -67,7 +67,7 @@ class Rindos(object):
             print(Fore.LIGHTGREEN_EX + "Starting {0} concurrent workers".format(self.nr_workers))
 
         # Start workers
-        for i in range(int(self.nr_workers)):
+        for i in range(int(workers)):
             try:
                 worker = Striker(self.url, self.nr_sockets, self.counter)
                 worker.useragents = self.useragents

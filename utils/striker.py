@@ -16,7 +16,7 @@ METHOD_RAND = 'random'         #
                                #
 JOIN_TIMEOUT=1.0               #
                                #
-DEFAULT_WORKERS=50             #
+             #
 DEFAULT_SOCKETS=4000           #
 ################################
 
