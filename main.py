@@ -9,10 +9,12 @@
 #####################################################################################################
 
 ################# IMPORTING THINGS ##################################
-from multiprocessing import Process, Manager, Pool                  #
+from multiprocessing import Process, Manager, Pool   
+from colorama import Fore, Back, Style               #
 from utils.rindos import Rindos                                     #
 from utils.striker import Striker                                   #
-import sys, getopt, random, time, os, urllib.parse, ssl, http.client#
+import sys, getopt, random, time, os, urllib.parse, ssl, http.client
+import colorama#
 #####################################################################                 
 
 #################### VARIABLES #
@@ -35,11 +37,13 @@ with open('important/userAgents.txt') as f:#
     USER_AGENT_PARTS = f.readlines()       #
 ############################################
 
+colorama.init(autoreset=True)
+
 def usage():
-    print("USAGE - python3 main.py url")
-    print("EXAMPLE - python3 main.py https://ilovedicks.com/")
+    print(Fore.YELLOW + "USAGE - python3 main.py url")
+    print(Fore.YELLOW + "EXAMPLE - python3 main.py https://ilovedicks.com/")
     print("\a")
-    print("""
+    print(Fore.RED + """
          ...          ...          ...  
                                         
           .                             
@@ -66,7 +70,7 @@ def error(msg):
 def main():
     try:
         if len(sys.argv) < 2:
-            error('Please supply at least the URL')
+            error(Fore.GREEN + 'Please supply at least the URL')
 
         url = sys.argv[1]
 
@@ -75,10 +79,10 @@ def main():
             sys.exit()
 
         if url[0:4].lower() != 'http':
-            error("Invalid URL supplied")
+            error(Fore.RED + "Invalid URL supplied")
 
         if url == None:
-            error("No URL supplied")
+            error(Fore.RED + "No URL supplied")
 
         opts, args = getopt.getopt(sys.argv[2:], "dhw:s:m:u:", ["debug", "help", "workers", "sockets", "method", "useragents" ])
 
@@ -116,7 +120,7 @@ def main():
                 with open(uas_file) as f:
                     useragents = f.readlines()
             except EnvironmentError:
-                    error("cannot read file {0}".format(uas_file))
+                    error(Fore.RED + "cannot read file {0}".format(uas_file))
 
         rindos = Rindos(url)
         rindos.useragents = useragents

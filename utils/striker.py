@@ -1,6 +1,8 @@
 ################# IMPORTING THINGS ##################################
-from multiprocessing import Process, Manager, Pool                  #
-import sys, getopt, random, time, os, urllib.parse, ssl, http.client#
+from multiprocessing import Process, Manager, Pool   
+from colorama import Fore, Back, Style               #
+import sys, getopt, random, time, os, urllib.parse, ssl, http.client
+import colorama#
 #####################################################################
 
 #################### VARIABLES #
@@ -88,7 +90,7 @@ class Striker(Process):
 
     def run(self):
         if DEBUG:
-            print("Starting worker {0}".format(self.name))
+            print(Fore.Green + "Starting worker {0}".format(self.name))
 
         while self.runnable:
             try:
@@ -119,7 +121,7 @@ class Striker(Process):
                     pass # silently ignore
 
         if DEBUG:
-            print("Worker {0} completed run. Sleeping...".format(self.name))
+            print(Fore.YELLOW + "Worker {0} completed run. Sleeping...".format(self.name))
             
     def closeConnections(self):
         for conn in self.socks:

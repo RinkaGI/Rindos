@@ -1,7 +1,9 @@
 ################# IMPORTING THINGS ##################################
 from multiprocessing import Process, Manager, Pool
+from colorama import Back, Fore, Style
 from utils.striker import Striker                                                                    #
-import sys, getopt, random, time, os, urllib.parse, ssl, http.client#
+import sys, getopt, random, time, os, urllib.parse, ssl, http.client
+import colorama#
 #####################################################################
 
 #################### VARIABLES #
@@ -47,7 +49,7 @@ class Rindos(object):
 
     def exit(self):
         self.stats()
-        print("Shutting down Rindos")
+        print(Fore.RED + "Shutting down Rindos")
 
     def __del__(self):
         self.exit()
@@ -59,10 +61,10 @@ class Rindos(object):
     # funny :D
     def fire(self):
         self.printHeader()
-        print("MODE: '{0}' - WORKERS: {1}  - CONNECTIONS: {2} ".format(self.method, self.nr_workers, self.nr_sockets))
+        print(Fore.LIGHTCYAN_EX + "MODE: '{0}' - WORKERS: {1}  - CONNECTIONS: {2} ".format(self.method, self.nr_workers, self.nr_sockets))
 
         if DEBUG:
-            print("Starting {0} concurrent workers".format(self.nr_workers))
+            print(Fore.LIGHTGREEN_EX + "Starting {0} concurrent workers".format(self.nr_workers))
 
         # Start workers
         for i in range(int(self.nr_workers)):
@@ -74,22 +76,22 @@ class Rindos(object):
                 self.workersQueue.append(worker)
                 worker.start()
             except (Exception):
-                print("Failed to start worker {0}".format(i))
+                print(Fore.RED + "Failed to start worker {0}".format(i))
                 sys.exit(1)
                 
 
         if DEBUG:
-            print("Initiating monitor")
+            print(Fore.YELLOW + "Initiating monitor")
         self.monitor()
 
     def stats(self):
         try:
             if self.counter[0] > 0 or self.counter[1] > 0:
 
-                print("{0} Rindos strikes deferred. ({1} Failed)".format(self.counter[0], self.counter[1]))
+                print(Fore.LIGHTRED_EX + "{0} Rindos strikes deferred. ({1} Failed)".format(self.counter[0], self.counter[1]))
 
                 if self.counter[0] > 0 and self.counter[1] > 0 and self.last_counter[0] == self.counter[0] and self.counter[1] > self.last_counter[1]:
-                    print("\tServer may be DOWN! :D")
+                    print(Fore.CYAN + "\tServer may be DOWN! :D")
     
                 self.last_counter[0] = self.counter[0]
                 self.last_counter[1] = self.counter[1]
@@ -108,11 +110,11 @@ class Rindos(object):
                 self.stats()
 
             except (KeyboardInterrupt, SystemExit):
-                print("CTRL+C received. Killing all workers")
+                print(Fore.LIGHTRED_EX + "CTRL+C received. Killing all workers")
                 for worker in self.workersQueue:
                     try:
                         if DEBUG:
-                            print("Killing worker {0}".format(worker.name))
+                            print(Fore.LIGHTRED_EX + "Killing worker {0}".format(worker.name))
                         #worker.terminate()
                         worker.stop()
                     except Exception as ex:
