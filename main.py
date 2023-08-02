@@ -8,6 +8,8 @@
 #                                        based on Saphyra2                                          #
 #####################################################################################################
 
+#githubbadgeversiontest
+
 ################# IMPORTING THINGS ##################################
 from multiprocessing import Process, Manager, Pool   
 from colorama import Fore, Back, Style               #
